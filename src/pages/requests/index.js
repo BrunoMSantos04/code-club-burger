@@ -1,53 +1,70 @@
-import React, {useState, useRef} from "react";
- import { useNavigate } from 'react-router-dom'
-// import axios from 'axios'
+import React, {useState, useEffect} from "react";
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-import orderImg from '../../assets/request.png'
-import trash from '../../assets/bin.png'
+import pedidos from '../../assets/pedido.png'
+import trash from '../../assets/bin.svg'
 
 import {
-    Container,
-    Itens,
-    H1,
-    Img,
-    Button
-  } from './styles';
+  Container,
+  Itens,
+  H1,
+  Img,
+  Button,
+  Order
+} from './styles';
 
-function App(){
-    const [orders, setPedido] = useState([])    
-    const navigate = useNavigate()
+//JSX
+function Orders() {
+  const [orders, setOrder] = useState([])
 
-    function goBackPage(){
-        navigate("/")
+  const navigate = useNavigate()
+
+  function goBackPage(){
+    navigate("/")
+  }
+
+  useEffect(() => {
+      async function fetchOrders(){
+        const {data: newOrders} = await axios.get("http://localhost:3001/orders")
+      setOrder(newOrders)
       }
+      fetchOrders()
+  }, [])
 
-    
+  async function deleteOrder (orderId) {
+      await axios.delete(`http://localhost:3001/orders/${orderId}`)
+      const newOrder = orders.filter(order => order.id !== orderId)
+      setOrder(newOrder)
+  }
 
-    return(
-        <Container>
-            <Img alt="logo" src={orderImg} />
-            <Itens>
-            <H1>Pedidos</H1> 
-                <ul>
-                {orders.map((user) => (
-                <User key={user.id}>
+  return (
+    <Container>
+        <Img alt="logo-img" src={pedidos} />
+        <Itens IsBlur={true}>
+          <H1>Pedidos</H1>
+          
+          <ul>
+            {orders.map((order) => (
+              <Order key={orders.id}>
 
-                <p> {user.name}</p><p>{user.age}</p>
+              <p> {orders.name}</p><p>{orders.age}</p>
 
-                <button onClick={() => deleteUser(user.id)} > 
-                    <img alt="trashbin" src={trash} /> 
-                </button>
+              <button onClick={() => deleteOrder(orders.id)} > 
+                <img alt="trashbin" src={trash} /> 
+              </button>
 
-                </User>
-                ))}
-            </ul>
+              </Order>
+            ))}
+          </ul>
 
           <Button reverseArrow={true} onClick={goBackPage} > 
             Voltar        
           </Button>
-            </Itens>
-        </Container>
+
+        </Itens>
+    </Container>
     );
 }
 
-export default App
+export default Orders

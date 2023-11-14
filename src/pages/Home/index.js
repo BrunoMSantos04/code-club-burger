@@ -1,6 +1,6 @@
 import React, {useState, useRef} from "react";
-// import { useNavigate } from 'react-router-dom'
-// import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 import logoCode from '../../assets/logo3.png'
 
@@ -15,12 +15,23 @@ import {
   } from './styles';
 
 function App(){
-    const [pedido, setPedido] = useState([])    
+    const [order, setPedido] = useState([])    
     const inputPedido = useRef()
     const inputNome = useRef()
+    const navigate = useNavigate()
 
-
+    async function addNewOrder() {
+        const {data: newOrder} = await axios.post("http://localhost:3001/orders", 
+            {
+              pedido: inputPedido.current.value, 
+              name: inputNome.current.value
+            });
     
+            console.log(newOrder)
+        setPedido([...order, newOrder]) 
+    
+       navigate("/pedidos") 
+    }
 
     return(
         <Container>
@@ -34,7 +45,7 @@ function App(){
                 <LabelInput>Nome do Cliente</LabelInput>
                 <Input ref={inputNome} placeholder="Ex: Gabriel Olegario"/>
 
-                <Button>
+                <Button to="/pedidos" onClick={addNewOrder}>
                     Fazer Pedido 
                 </Button>
             </Itens>
