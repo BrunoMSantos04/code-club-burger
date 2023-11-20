@@ -48,9 +48,12 @@ function Orders() {
             {orders.map((order) => (
               <Order key={orders.id}>
 
-              <p> {orders.name}</p><p>{orders.age}</p>
+              <div className="pedido">
+                <p>Pedido: {order.pedido}</p>
+                <p>Nome do cliente: {order.name}</p>
+              </div>
 
-              <button onClick={() => deleteOrder(orders.id)} > 
+              <button onClick={() => deleteOrder(order.id)} > 
                 <img alt="trashbin" src={trash} /> 
               </button>
 
@@ -58,7 +61,7 @@ function Orders() {
             ))}
           </ul>
 
-          <Button reverseArrow={true} onClick={goBackPage} > 
+          <Button onClick={goBackPage} > 
             Voltar        
           </Button>
 
