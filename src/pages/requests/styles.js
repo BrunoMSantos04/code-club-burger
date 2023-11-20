@@ -78,29 +78,29 @@ export const Order = styled.li`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    
-    margin-top: 24px;
-    width: 342px;
-    height: 101px;
-    border-radius: 14px;
+    margin-top: 28px;
+    width: 380px;
+    height: 110px;
+    border-radius: 18px;
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     border: none;
     outline: none;
-
+    
 p{
     color: #FFF;
-    font-size: 24px;
+    font-size: 23px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    margin-top: 8px;
     }
 
 button{
     background: none;
     cursor: pointer;
-    width: 24px;
-    height: 28px;
+    width: 26px;
+    height: 29px;
     flex-shrink: 0;
     border: none;
     outline: none;
